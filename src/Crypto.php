@@ -7,7 +7,7 @@ namespace OndraKoupil\Csob;
  *
  * @see https://github.com/csob/paymentgateway/blob/master/eshop-integration/eAPI/v1/php/example/crypto.php
  */
-class Crypto {
+final class Crypto {
 
 	const DEFAULT_HASH_METHOD = OPENSSL_ALGO_SHA1;
 
@@ -24,7 +24,7 @@ class Crypto {
 	 * @return string Signature encoded with Base64
 	 * @throws CryptoException When signing fails or key file path is not valid
 	 */
-	static function signString($string, $privateKeyFile, $privateKeyPassword = "", $hashMethod = self::DEFAULT_HASH_METHOD) {
+	public static function signString($string, $privateKeyFile, $privateKeyPassword = "", $hashMethod = self::DEFAULT_HASH_METHOD) {
 
 		if (!function_exists("openssl_get_privatekey")) {
 			throw new CryptoException("OpenSSL extension in PHP is required. Please install or enable it.");
@@ -67,7 +67,7 @@ class Crypto {
 	 *
 	 * @return bool True if signature is correct
 	 */
-	static function verifySignature($textToVerify, $signatureInBase64, $publicKeyFile, $hashMethod = self::DEFAULT_HASH_METHOD) {
+	public static function verifySignature($textToVerify, $signatureInBase64, $publicKeyFile, $hashMethod = self::DEFAULT_HASH_METHOD) {
 
 		if (!function_exists("openssl_get_privatekey")) {
 			throw new CryptoException("OpenSSL extension in PHP is required. Please install or enable it.");
@@ -103,7 +103,7 @@ class Crypto {
 	 *
 	 * @return string|array
 	 */
-	static function createSignatureBaseFromArray($array, $returnAsArray = false) {
+	public static function createSignatureBaseFromArray($array, $returnAsArray = false) {
 		$linearizedArray = self::createSignatureBaseRecursion($array);
 		if ($returnAsArray) {
 			return $linearizedArray;
@@ -175,7 +175,7 @@ class Crypto {
 	 *
 	 * @return array
 	 */
-	static function createSignatureBaseWithOrder($data, $order, $returnAsArray = false) {
+	public static function createSignatureBaseWithOrder($data, $order, $returnAsArray = false) {
 
 		$result = array();
 
